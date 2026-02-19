@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FileUpload } from './components/FileUpload';
 import { ResultsDisplay } from './components/ResultsDisplay';
 import { FileText } from 'lucide-react';
+import { getRandomMockResume } from './lib/mockData';
 
 interface Analysis {
   ats_score: number;
@@ -77,6 +78,15 @@ function App() {
     setError(null);
   };
 
+  const handleDemo = () => {
+    const mockResume = getRandomMockResume();
+    setResult({
+      filename: mockResume.filename,
+      ats_score: mockResume.ats_score,
+      analysis: mockResume.analysis,
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="container mx-auto px-4 py-12">
@@ -99,7 +109,7 @@ function App() {
         )}
 
         {!result ? (
-          <FileUpload onUpload={handleUpload} isLoading={isLoading} />
+          <FileUpload onUpload={handleUpload} onDemo={handleDemo} isLoading={isLoading} />
         ) : (
           <ResultsDisplay
             filename={result.filename}
