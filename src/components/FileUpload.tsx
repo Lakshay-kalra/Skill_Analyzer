@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { Upload, Zap } from 'lucide-react';
+import { Upload } from 'lucide-react';
 
 interface FileUploadProps {
   onUpload: (file: File) => void;
-  onDemo: () => void;
   isLoading: boolean;
 }
 
-export function FileUpload({ onUpload, onDemo, isLoading }: FileUploadProps) {
+export function FileUpload({ onUpload, isLoading }: FileUploadProps) {
   const [dragActive, setDragActive] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -84,25 +83,15 @@ export function FileUpload({ onUpload, onDemo, isLoading }: FileUploadProps) {
         </label>
       </div>
 
-      <div className="mt-6 flex gap-3">
-        {selectedFile && (
-          <button
-            onClick={handleSubmit}
-            disabled={isLoading}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
-          >
-            {isLoading ? 'Analyzing...' : 'Analyze Resume'}
-          </button>
-        )}
+      {selectedFile && (
         <button
-          onClick={onDemo}
+          onClick={handleSubmit}
           disabled={isLoading}
-          className="flex-1 bg-amber-500 hover:bg-amber-600 disabled:bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2"
+          className="mt-6 w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
         >
-          <Zap className="w-4 h-4" />
-          Demo
+          {isLoading ? 'Analyzing...' : 'Analyze Resume'}
         </button>
-      </div>
+      )}
     </div>
   );
 }
